@@ -55,13 +55,13 @@ async def get_balance(address: str): # Defines an asynchronous function that tak
 async def root(): # Defines an asynchronous function for the root endpoint
     return {"message": "Welcome to the Web3 Balance API! Visit /docs for API documentation."}
 
-# Keep the original CLI functionality
-if __name__ == "__main__":
-    address = input("Enter an Ethereum address to check balance: ")
-    try:
-        checksum_address = w3.to_checksum_address(address)
-        balance = w3.eth.get_balance(checksum_address)
-        balance_eth = w3.from_wei(balance, 'ether')
-        print(f"ETH balance of {checksum_address}: {balance_eth} ETH")
-    except ValueError as e:
-        print(f"Invalid address: {address} ({e})")
+# Keep the original CLI functionality to check Eth address balance
+if __name__ == "__main__": # Check if the script is run directly (not imported by another module)-- only runs if file is executed directly
+    address = input("Enter an Ethereum address to check balance: ") # Prompt user for an Ethereum address and stores as string
+    try: # Initiate try/except block
+        checksum_address = w3.to_checksum_address(address) # Convert the address to checksum format for validation
+        balance = w3.eth.get_balance(checksum_address) # Query the blockchain (via Quicknode) for the address in wei
+        balance_eth = w3.from_wei(balance, 'ether') # Convert the balance from wei to ether
+        print(f"ETH balance of {checksum_address}: {balance_eth} ETH") # Print the balance in ETH
+    except ValueError as e: # Catch ValueError for invalid address format
+        print(f"Invalid address: {address} ({e})") # Print error message for invalid address
