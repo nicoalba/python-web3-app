@@ -32,27 +32,27 @@ else:
 
 # Define API endpoints
 @app.get("/block-number") # Get the latest Ethereum block number
-async def get_block_number():
-    try:
-        block_number = w3.eth.block_number
-        return {"block_number": block_number}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error fetching block number: {str(e)}")
+async def get_block_number(): # Defines an asynchronous function
+    try: # Initiate try/except block
+        block_number = w3.eth.block_number # Use Web3 (and Eth module) to query Quicknode and get block number -- defined above
+        return {"block_number": block_number} # Return block number in JSON
+    except Exception as e: # Catch exceptions/errors
+        raise HTTPException(status_code=500, detail=f"Error fetching block number: {str(e)}") # Raise HTTP 500 error with message
 
-@app.get("/balance/{address}") # Get the balance of a specific Ethereum address
-async def get_balance(address: str):
-    try:
-        checksum_address = w3.to_checksum_address(address)
-        balance = w3.eth.get_balance(checksum_address)
-        balance_eth = w3.from_wei(balance, 'ether')
-        return {"address": checksum_address, "balance_eth": float(balance_eth)}
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=f"Invalid address: {address} ({str(e)})")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error fetching balance: {str(e)}")
+@app.get("/balance/{address}") # Get the balance of a specific Ethereum address (address is parameter)
+async def get_balance(address: str): # Defines an asynchronous function that takes an address as a string parameter
+    try: # Intiate try/except block
+        checksum_address = w3.to_checksum_address(address) # Convert the address to checksum format for validation
+        balance = w3.eth.get_balance(checksum_address) # Query the blockchain (via Quicknode) for the address in wei
+        balance_eth = w3.from_wei(balance, 'ether') # Convert the balance from wei to ether
+        return {"address": checksum_address, "balance_eth": float(balance_eth)} # Return JSON-compatible dictionary w/ 2 keys
+    except ValueError as e: # Catch ValueError for invalid address format
+        raise HTTPException(status_code=400, detail=f"Invalid address: {address} ({str(e)})") # Raise HTTP 400 error with message
+    except Exception as e: # Catch any other exceptions
+        raise HTTPException(status_code=500, detail=f"Error fetching balance: {str(e)}") # Raise HTTP 500 error with message
 
 @app.get("/") # Root endpoint to provide a welcome message
-async def root():
+async def root(): # Defines an asynchronous function for the root endpoint
     return {"message": "Welcome to the Web3 Balance API! Visit /docs for API documentation."}
 
 # Keep the original CLI functionality
