@@ -1,6 +1,6 @@
 # python-web3-app
 
-Work in progress: Vibe coding a Python web3 app that connects to the Ethereum Sepolia testnet using `web3.py` to query the ETH balance of a user-provided address via the CLI. This project demonstrates basic Python programming, blockchain interaction, and API development/documentation with FastAPI. 
+Work in progress: Vibe coding a Python web3 app that connects to the Ethereum Sepolia testnet using `web3.py` to query the ETH balance of a user-provided address via the CLI. This project showcases basic Python programming, blockchain interaction, API development with FastAPI, and app deployment with Render. 
 
 ## Context
 
