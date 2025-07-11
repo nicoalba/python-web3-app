@@ -108,7 +108,9 @@ ETH balance of 0xYourAddress: 0.1 ETH
     uvicorn eth-web3-app:app --reload
     ```
 
-2. Go to <http://localhost:8000/docs> in a browser to view interactive API documentation.
+2. Go to <http://localhost:8000/docs> in a browser to view interactive API documentation:
+
+   ![API docs screenshot](images/api-screen.png)
 
 ## Future enhancements / to do
 
