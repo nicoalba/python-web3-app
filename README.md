@@ -126,6 +126,8 @@ curl https://python-web3-app.onrender.com/block-number
 curl https://python-web3-app.onrender.com/balance/0xYourValidAddress
 ```
 
+**Note**: The free-tier Render instance spins down after 15 minutes of inactivity, causing a 30-sec delay on the next request.
+
 ## Future enhancements
 
 - Add ERC-20 token balance queries for Sepolia test tokens.
