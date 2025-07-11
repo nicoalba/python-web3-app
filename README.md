@@ -6,13 +6,13 @@ Work in progress: Vibe coding a Python web3 app that connects to the Ethereum Se
 
 This was a learning exercise where I used AI to help guide me through the process as developing a web3 app that queries the blockchain. As someone actively learning Python, this was very helpful for me and I made sure to add comments on every line to document what the code does.
 
-## Feature
+## Features
 
 - Connects to the Sepolia testnet via a QuickNode endpoint.
 - Prompts users to input an Ethereum address and validates it using web3.py's checksum address conversion.
 - Queries and displays the ETH balance of the provided address in a user-friendly format.
-- - Uses a Coinbase Wallet for testing with Sepolia test ETH, showcasing wallet setup and faucet usage.
-Implements error handling for invalid addresses and connection issues.
+- Uses a Coinbase Wallet for testing with Sepolia test ETH, showcasing wallet setup and faucet usage.
+- Implements error handling for invalid addresses and connection issues.
 
 ## Tech stack
 
