@@ -23,7 +23,7 @@ This is a learning exercise where I used AI to help guide me through the process
 - [FastAPI](https://fastapi.tiangolo.com/): Provides a framework for automated API documentaton for all endpoints.
 - [Coinbase Wallet](https://www.coinbase.com/wallet): Non-custodial wallet for managing Sepolia testnet addresses and test ETH.
 - [QuickNode](https://www.quicknode.com/): Provides the Sepolia testnet endpoint for blockchain access.
-
+- [Render](https://render.com/): Hosting platform for deploying the FastAPI backend for public API access.
 
 ## Prerequisites
 
@@ -111,6 +111,20 @@ ETH balance of 0xYourAddress: 0.1 ETH
 2. Go to <http://localhost:8000/docs> in a browser to view interactive API documentation:
 
    ![API docs screenshot](images/api-screen.png)
+
+## Live demo
+
+The FastAPI backend is deployed on Render for public access. Go to <https://python-web3-app.onrender.com/docs> to explore the interactive API documentation and test the endpoints:
+
+- `GET /block-number`: Get the latest Sepolia testnet block number.
+- `GET /balance/{address}`: Query the ETH balance of a valid Ethereum address.
+
+To test the API using curl:
+
+```bash
+curl https://python-web3-app.onrender.com/block-number
+curl https://python-web3-app.onrender.com/balance/0xYourValidAddress
+```
 
 ## Future enhancements
 
