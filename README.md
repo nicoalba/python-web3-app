@@ -1,17 +1,18 @@
 # python-web3-app
 
-Work in progress: Vibe coding a Python web3 app that connects to the Ethereum Sepolia testnet using `web3.py` to query the ETH balance of a user-provided address. 
+Work in progress: Vibe coding a Python web3 app that connects to the Ethereum Sepolia testnet using `web3.py` to query the ETH balance of a user-provided address via the CLI. This project demonstrates basic Python programming, blockchain interaction, and API development/documentation with FastAPI. 
 
 ## Context
 
-This was a learning exercise where I used AI to help guide me through the process of developing a web3 app that queries the blockchain. As someone actively learning Python, this was extremely helpful and conducive to learning. To that end, I made sure to add comments on every line to document what the code does.
+This is a learning exercise where I used AI to help guide me through the process of developing a web3 app that queries the blockchain. As someone actively learning Python, this was extremely helpful and conducive to learning. To that end, I made sure to add comments on every line to document what the code does.
 
 ## Features
 
 - Connects to the Sepolia testnet via a QuickNode endpoint.
 - Prompts users to input an Ethereum address and validates it using `web3.py`'s checksum address conversion.
 - Queries and displays the ETH balanceof the provided address.
-- Uses Coinbase Wallet for testing with Sepolia test ETH, showcasing wallet setup and faucet usage.
+- Includes a FastAPI back-end with endpoints documented.
+- Uses Coinbase Wallet for testing with Sepolia test ETH.
 - Implements error handling for invalid addresses and connection issues.
 
 ## Tech stack
@@ -19,9 +20,10 @@ This was a learning exercise where I used AI to help guide me through the proces
 - Python 3: The core programming language.
 - `web3.py` (`v7.12.0`): Python library for Ethereum blockchain interaction.
 - `python-dotenv`: Loads environment variables (e.g., QuickNode API URL) from a `.env` file.
+- [FastAPI](https://fastapi.tiangolo.com/): Provides a framework for automated API documentaton for all endpoints.
 - [Coinbase Wallet](https://www.coinbase.com/blog/coinbase-wallet-is-now-available-as-a-standalone-browser-extension): Non-custodial wallet for managing Sepolia testnet addresses and test ETH.
 - [QuickNode](https://www.quicknode.com/): Provides the Sepolia testnet endpoint for blockchain access.
-- [FastAPI](https://fastapi.tiangolo.com/): Provides a framework for automated API documentaton for all endpoints.
+
 
 ## Prerequisites
 
@@ -40,7 +42,7 @@ This was a learning exercise where I used AI to help guide me through the proces
     cd python-web3-app
     ```
 
-2. Set Up a virtual environment:
+2. Set up a virtual environment:
 
     ```bash
     python -m venv venv
@@ -70,24 +72,21 @@ This was a learning exercise where I used AI to help guide me through the proces
     2. Switch to the Sepolia testnet in the wallet.
     3. Fund your Sepolia address with test ETH from the [QuickNode Ethereum Faucet](https://faucet.quicknode.com/ethereum).
 
-## Usage
+## Usage via the CLI
 
 1. Run the script:
 
     ```bash
     python test-web3.py
     ```
-    
+
+2. Follow the prompt and enter a valid Ethereum address.
+
     The script will:
 
     1. Load the QuickNode endpoint from the `.env` file.
     2. Connect to the Sepolia testnet and display the latest block number.
-    3. Prompt you for an Ethereum address.
-    4. Display the ETH balance of the address.
-
-       For example: `ETH balance of 0xYourAddress: 0.1 ETH`
-
-  2. Enter your Coinbase Wallet’s Sepolia address (or any valid Ethereum address) to check its balance.
+    4. Validate the address and display the ETH balance.
 
 ## Example output
 
@@ -101,8 +100,17 @@ Enter an Ethereum address to check balance: 0xYourAddress
 ETH balance of 0xYourAddress: 0.1 ETH
 ```
 
+## Usage (API)
+
+1. Run the FsatAPI server:
+
+    ```bash
+    uvicorn eth-web3-app:app --reload
+    ```
+
+2. Go to <http://localhost:8000/docs> in a browser to view interactive API documentation.
+
 ## Future enhancements / to do
 
 - Add ERC-20 token balance queries for Sepolia test tokens.
-- Create a web interface using FastAPI for user-friendly interaction.
-
+- Deploy the FastAPI backend to a platform like Render or Vercel for public access.
