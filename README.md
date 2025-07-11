@@ -10,7 +10,7 @@ This is a learning exercise where I used AI to help guide me through the process
 
 - Connects to the Sepolia testnet via a QuickNode endpoint.
 - Prompts users to input an Ethereum address and validates it using `web3.py`'s checksum address conversion.
-- Queries and displays the ETH balanceof the provided address.
+- Queries and displays the ETH balance of the provided address.
 - Includes a FastAPI back-end with endpoints documented.
 - Uses Coinbase Wallet for testing with Sepolia test ETH.
 - Implements error handling for invalid addresses and connection issues.
@@ -21,7 +21,7 @@ This is a learning exercise where I used AI to help guide me through the process
 - `web3.py` (`v7.12.0`): Python library for Ethereum blockchain interaction.
 - `python-dotenv`: Loads environment variables (e.g., QuickNode API URL) from a `.env` file.
 - [FastAPI](https://fastapi.tiangolo.com/): Provides a framework for automated API documentaton for all endpoints.
-- [Coinbase Wallet](https://www.coinbase.com/blog/coinbase-wallet-is-now-available-as-a-standalone-browser-extension): Non-custodial wallet for managing Sepolia testnet addresses and test ETH.
+- [Coinbase Wallet](https://www.coinbase.com/wallet): Non-custodial wallet for managing Sepolia testnet addresses and test ETH.
 - [QuickNode](https://www.quicknode.com/): Provides the Sepolia testnet endpoint for blockchain access.
 
 
@@ -52,7 +52,7 @@ This is a learning exercise where I used AI to help guide me through the process
 3. Install dependencies:
 
     ```bash
-    pip install web3 python-dotenv
+    pip install web3 python-dotenv fastapi uvicorn
     ```
 
 4. Configure the environment variables:
@@ -77,7 +77,7 @@ This is a learning exercise where I used AI to help guide me through the process
 1. Run the script:
 
     ```bash
-    python test-web3.py
+    python eth-web3-app.py.py
     ```
 
 2. Follow the prompt and enter a valid Ethereum address.
@@ -102,7 +102,7 @@ ETH balance of 0xYourAddress: 0.1 ETH
 
 ## Usage (API)
 
-1. Run the FsatAPI server:
+1. Run the FastAPI server:
 
     ```bash
     uvicorn eth-web3-app:app --reload
