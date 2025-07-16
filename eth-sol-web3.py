@@ -58,7 +58,11 @@ async def get_balance(address: str): # Defines an asynchronous function that tak
     except Exception as e: # Catch any other exceptions
         raise HTTPException(status_code=500, detail=f"Error fetching balance: {str(e)}") # Raise HTTP 500 error with message
 
-@app.get("/") # Root endpoint to provide a welcome message
+@app.get( # Custom root endpoint for the API
+    "/solana-balance/{address}", # Custom path for Solana balance endpoint
+    summary="Get Solana balance", # Custom summary for the endpoint
+    description="Returns the SOL balance for the provided Solana wallet address.",
+)
 async def root(): # Defines an asynchronous function for the root endpoint
     return {"message": "Welcome to the Web3 Balance API! Visit /docs for API documentation."}
 
