@@ -141,5 +141,4 @@ curl https://python-web3-app.onrender.com/balance/0xYourValidAddress
 ## Future enhancements
 
 - Add ERC-20 token balance queries for Sepolia test tokens.
-- Deploy the FastAPI backend to a platform like Render or Vercel for public access.
 - Configure with CORS for cross-origin requests.
