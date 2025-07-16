@@ -82,16 +82,16 @@ This is a learning exercise where I used AI to help guide me through the process
 1. Run the script:
 
     ```bash
-    python eth-web3-app.py
+    python eth-sol-web3.py
     ```
 
-2. Follow the prompt and enter a valid Ethereum address.
+2. Follow the prompt and enter a valid Ethereum or Solana address.
 
     The script will:
 
-    1. Load the QuickNode endpoint from the `.env` file.
-    2. Connect to the Sepolia testnet and display the latest block number.
-    4. Validate the address and display the ETH balance.
+    1. Load the QuickNode or Solana endpoint from the `.env` file.
+    2. Connect to the Sepolia testnet or Solana Devnet and display the latest block number.
+    3. Validate the address and display the ETH or SOL balance.
 
 ## Example output
 
@@ -104,6 +104,11 @@ Latest block number: 8693694
 Enter an Ethereum address to check balance: 0xYourAddress
 ETH balance of 0xYourAddress: 0.1 ETH
 ```
+
+### Example test addresses
+
+Ethereum (Sepolia): `0x742d35Cc6634C0532925a3b844Bc454e4438f44e`
+Solana (Devnet): `4Nd1mGJqD1bNQcb3KgVsC4MQpRxHBaHCErBp9aZ9bJfF`
 
 ## Usage (API)
 
