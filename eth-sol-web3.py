@@ -29,6 +29,20 @@ w3 = Web3(Web3.HTTPProvider(provider_url)) # Initialize Web3 instance with HTTP 
 # Initialize FastAPI app
 app = FastAPI(title="Web3 Balance API", description="API for checking Ethereum/Solana blockchain data") # Set API title and description
 
+# Define helper functions
+def get_eth_balance(address: str) -> dict: # Function to get Ethereum balance
+    checksum_address = w3.to_checksum_address(address) # Convert address to checksum format for validation
+    balance = w3.eth.get_balance(checksum_address) # Query the blockchain (via QuickNode) for the address balance in wei
+    balance_eth = w3.from_wei(balance, 'ether') # Convert the balance from wei to ether
+    return {"address": checksum_address, "balance_eth": float(balance_eth)} # Return balance in JSON format
+
+def get_sol_balance(address: str) -> dict: # Function to get Solana balance
+    pubkey = Pubkey.from_string(address) # Convert the address to a Solana PublicKey object for validation
+    response = solana_client.get_balance(pubkey) # Query the Solana blockchain for the address balance
+    lamports = response.value # Extract the balance in lamports (smallest unit of Solana)
+    sol = lamports / 1_000_000_000 # Convert lamports to SOL (1 SOL = 1 billion lamports)
+    return {"address": str(pubkey), "balance_sol": sol} # Return balance in JSON format
+
 # Check connection and print status
 if w3.is_connected():
     print("Connected to blockchain!")
@@ -45,31 +59,28 @@ async def get_block_number(): # Defines an asynchronous function
     except Exception as e: # Catch exceptions/errors
         raise HTTPException(status_code=500, detail=f"Error fetching block number: {str(e)}") # Raise HTTP 500 error with message
 
-@app.get("/balance/{address}") # Get the balance of a specific Ethereum address (address is parameter)
-async def get_balance(address: str): # Defines an asynchronous function that takes an address as a string parameter
-    try: # Intiate try/except block
-        checksum_address = w3.to_checksum_address(address) # Convert the address to checksum format for validation
-        balance = w3.eth.get_balance(checksum_address) # Query the blockchain (via Quicknode) for the address in wei
-        balance_eth = w3.from_wei(balance, 'ether') # Convert the balance from wei to ether
-        return {"address": checksum_address, "balance_eth": float(balance_eth)} # Return JSON-compatible dictionary w/ 2 keys
+@app.get( # Define API endpoint to get Ethereum balance
+    "/balance/{address}",
+    summary="Get Ethereum balance",
+    description="Returns the ETH balance for the provided Ethereum wallet address.",
+)
+async def get_balance(address: str): # Asynchronous function to get balance
+    try: # Initiate try/except block
+        return get_eth_balance(address) # Call the helper function to get the balance
     except ValueError as e: # Catch ValueError for invalid address format
-        raise HTTPException(status_code=400, detail=f"Invalid address: {address} ({str(e)})") # Raise HTTP 400 error with message
+        raise HTTPException(status_code=400, detail=f"Invalid address: {address} ({str(e)})")
     except Exception as e: # Catch any other exceptions
-        raise HTTPException(status_code=500, detail=f"Error fetching balance: {str(e)}") # Raise HTTP 500 error with message
+        raise HTTPException(status_code=500, detail=f"Error fetching balance: {str(e)}")
 
 @app.get(
-    "/solana-balance/{address}", # Get the balance of a specific Solana address
-    summary="Get Solana balance", # Custom summary for the endpoint
+    "/solana-balance/{address}",
+    summary="Get Solana balance",
     description="Returns the SOL balance for the provided Solana wallet address.",
 )
-async def get_solana_balance(address: str): # Defines an asynchronous function that takes an address as a string parameter
-    try: # Initiate try/except block
-        pubkey = Pubkey.from_string(address) # Convert the address to a Solana PublicKey object for validation
-        response = solana_client.get_balance(pubkey) # Query the Solana blockchain for the address balance
-        lamports = response.value # Extract the balance in lamports (smallest unit of Solana)
-        sol = lamports / 1_000_000_000 # Convert lamports to SOL (1 SOL = 1 billion lamports)
-        return {"address": str(pubkey), "balance_sol": sol} # Return JSON-compatible dictionary with address and balance
-    except Exception as e: # Catch any exceptions
+async def get_solana_balance(address: str):
+    try:
+        return get_sol_balance(address) # Call the helper function to get the Solana balance
+    except Exception as e:
         raise HTTPException(status_code=400, detail=f"Invalid or failed request: {str(e)}")
 
 # CLI functionality to check Eth address balance
@@ -79,22 +90,16 @@ if __name__ == "__main__": # Check if the script is run directly (not imported b
     if choice == "1": # If user chooses Ethereum
         address = input("Enter an Ethereum address to check balance: ") # Prompt user for an Ethereum address and stores as string
         try: # Initiate try/except block
-            checksum_address = w3.to_checksum_address(address) # Convert the address to checksum format for validation
-            balance = w3.eth.get_balance(checksum_address) # Query the blockchain (via Quicknode) for the address in wei
-            balance_eth = w3.from_wei(balance, 'ether') # Convert the balance from wei to ether
-            print(f"ETH balance of {checksum_address}: {balance_eth} ETH") # Print the balance in ETH
+            result = get_eth_balance(address) # Call the helper function to get the balance
+            print(f"ETH balance of {result['address']}: {result['balance_eth']} ETH") # Print the balance in ETH
         except ValueError as e: # Catch ValueError for invalid address format
             print(f"Invalid address: {address} ({e})") # Print error message for invalid address
     elif choice == "2": # If user chooses Solana
         address = input("Enter a Solana wallet address to check balance: ") # Prompt user for a Solana address and stores as string
         try: # Initiate try/except block
-            pubkey = Pubkey.from_string(address) # Convert the address to a Solana PublicKey object for validation
-            response = solana_client.get_balance(pubkey) # Query the Solana blockchain for the address balance
-            lamports = response.value # Extract the balance in lamports (smallest unit of Solana)
-            sol = lamports / 1_000_000_000 # Convert lamports to SOL (1 SOL = 1 billion lamports)
-            print(f"SOL balance of {pubkey}: {sol} SOL") # Print the balance in SOL
+            result = get_sol_balance(address) # Call the helper function to get the balance
+            print(f"SOL balance of {result['address']}: {result['balance_sol']} SOL") # Print the balance in SOL
         except Exception as e: # Catch any exceptions
             print(f"Invalid Solana address or request failed: {e}")
     else:
         print("Invalid choice. Please enter 1 or 2.")
-
