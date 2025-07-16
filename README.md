@@ -107,8 +107,8 @@ ETH balance of 0xYourAddress: 0.1 ETH
 
 ### Example test addresses
 
-Ethereum (Sepolia): `0x742d35Cc6634C0532925a3b844Bc454e4438f44e`
-Solana (Devnet): `4Nd1mGJqD1bNQcb3KgVsC4MQpRxHBaHCErBp9aZ9bJfF`
+- Ethereum (Sepolia): `0x742d35Cc6634C0532925a3b844Bc454e4438f44e`
+- Solana (Devnet): `4Nd1mGJqD1bNQcb3KgVsC4MQpRxHBaHCErBp9aZ9bJfF`
 
 ## Usage (API)
 
