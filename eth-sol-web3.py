@@ -1,7 +1,6 @@
 import os # Import built-in os module to handle environment variables
 from dotenv import load_dotenv # Import load_dotenv to read .env files
-from web3 import Web3 # Import Web3 from web3.py library to interact with Ethereum blockchain
-import web3 # Import web3 module to access its version
+from web3 import Web3, __version__ as web3_version # Import Web3 and its version from web3.py library
 from fastapi import FastAPI, HTTPException # Import FastAPI and HTTPException for building web applications
 
 from solana.rpc.api import Client as SolanaClient # Import SolanaClient to interact with Solana blockchain
@@ -12,7 +11,7 @@ load_dotenv()
 print(f"Looking for .env file at: {os.path.abspath('.env')}")
 
 # Print web3.py version
-print(f"web3.py version: {web3.__version__}")
+print(f"web3.py version: {web3_version}")
 
 # Load provider URL from .env (QuickNode endpoint)
 provider_url = os.getenv("WEB3_PROVIDER_URL")
@@ -21,7 +20,7 @@ print(f"WEB3_PROVIDER_URL: {provider_url}")
 if not provider_url:
     raise ValueError("WEB3_PROVIDER_URL not set in .env file")
 
-# Creat Solana client
+# Create Solana client
 solana_client = SolanaClient(SOLANA_PROVIDER_URL) # Initialize Solana client with provider URL from .env
 
 # Connect to blockchain via QuickNode
@@ -58,15 +57,11 @@ async def get_balance(address: str): # Defines an asynchronous function that tak
     except Exception as e: # Catch any other exceptions
         raise HTTPException(status_code=500, detail=f"Error fetching balance: {str(e)}") # Raise HTTP 500 error with message
 
-@app.get( # Custom root endpoint for the API
-    "/solana-balance/{address}", # Custom path for Solana balance endpoint
+@app.get(
+    "/solana-balance/{address}", # Get the balance of a specific Solana address
     summary="Get Solana balance", # Custom summary for the endpoint
     description="Returns the SOL balance for the provided Solana wallet address.",
 )
-async def root(): # Defines an asynchronous function for the root endpoint
-    return {"message": "Welcome to the Web3 Balance API! Visit /docs for API documentation."}
-
-@app.get("/solana-balance/{address}") # Get the balance of a specific Solana address
 async def get_solana_balance(address: str): # Defines an asynchronous function that takes an address as a string parameter
     try: # Initiate try/except block
         pubkey = Pubkey.from_string(address) # Convert the address to a Solana PublicKey object for validation
