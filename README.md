@@ -128,6 +128,7 @@ The FastAPI backend is deployed on Render for public access. Go to <https://pyth
 
 - `GET /block-number`: Get the latest Sepolia testnet block number.
 - `GET /balance/{address}`: Query the ETH balance of a valid Ethereum address.
+- `GET /solana-balance/{address}`: Query the SOL balance of a valid Solana address.
 
 To test the API using curl:
 
