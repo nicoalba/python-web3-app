@@ -51,7 +51,11 @@ else:
     print("Connection failed. Check provider URL or network status.")
 
 # Define API endpoints
-@app.get("/block-number") # Get the latest Ethereum block number
+@app.get( # Define API endpoint to get the latest Ethereum block number
+    "/block-number",
+    summary="Get latest Ethereum block number",
+    description="Returns the latest block number on the Ethereum blockchain.",
+)
 async def get_block_number(): # Defines an asynchronous function
     try: # Initiate try/except block
         block_number = w3.eth.block_number # Use Web3 (and Eth module) to query Quicknode and get block number -- defined above

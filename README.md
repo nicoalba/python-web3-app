@@ -120,7 +120,7 @@ ETH balance of 0xYourAddress: 0.1 ETH
 
 2. Go to <http://localhost:8000/docs> in a browser to view interactive API documentation:
 
-   ![API docs screenshot](images/api-screen.png)
+   ![API docs screenshot](images/api-screen2.png)
 
 ## Live demo
 
